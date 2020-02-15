@@ -2,7 +2,9 @@
 
 This is a simple snake game written in C using the GBDK toolchain for Gameboy.
 
-![](res/snake.gif)
+<p align="center">
+  <img src="https://github.com/michaelmcallister/yagbs/blob/master/res/snake.gif?raw=true"  height="288" width="320"/>
+</p>
 
 ## Getting Started
 
