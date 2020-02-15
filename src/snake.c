@@ -153,6 +153,8 @@ void init() {
   snake.x = RANDOM_X;
   snake.y = RANDOM_Y;
 
+  drawSnake();
+
   SHOW_BKG;
   SHOW_SPRITES;
   DISPLAY_ON;
@@ -164,6 +166,7 @@ void main() {
   score = 1;
 
   init();
+  waitpad(J_RIGHT | J_LEFT | J_UP | J_DOWN);
 
   while (1) {
     wait_vbl_done();
