@@ -2,12 +2,14 @@
 
 This is a simple snake game written in C using the GBDK toolchain for Gameboy.
 
+![](res/snake.gif)
+
 ## Getting Started
 
 ### Prerequisites
 
 GBDK is the only pre-requisite to build this project. Make sure you clone this
-project to include the GBDK submodule
+project to include GBDK with it.
 ```
 $ git clone --recurse-submodules https://github.com/michaelmcallister/yagbs.git
 ```
