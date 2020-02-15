@@ -32,6 +32,8 @@
 // Cardinality of the snake.
 typedef enum Direction { UP, DOWN, LEFT, RIGHT };
 
+UINT8 frame, level, score;
+
 struct Fruit {
   UINT8 x, y;
 };
@@ -131,6 +133,8 @@ UINT8 hasEatenFruit() {
 }
 
 void init() {
+  DISPLAY_OFF;
+
   SPRITES_8x8;
 
   set_bkg_data(0, NUM_SPRITES, tiles);
@@ -151,12 +155,13 @@ void init() {
 
   SHOW_BKG;
   SHOW_SPRITES;
+  DISPLAY_ON;
 }
 
 void main() {
-  UINT8 frame = 0;
-  UINT8 level = 1;
-  UINT8 score = 1;
+  frame = 0;
+  level = 1;
+  score = 1;
 
   init();
 
