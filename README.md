@@ -33,7 +33,7 @@ Compiling is easy once GBDK is installed:
 The game will be written to the `dist/` folder
 
 ```bash
-ls -Gg dist/
+$ ls -Gg dist/
 total 64
 -rwxrwxrwx 1 65536 Feb 15 11:12 snake.gb
 ```
@@ -52,3 +52,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * [GBDK](http://gbdk.sourceforge.net/) for making a library that means I don't have to write ASM.
+* [OpenGameArt.org](https://opengameart.org/content/8x8-font) for the font sprites.

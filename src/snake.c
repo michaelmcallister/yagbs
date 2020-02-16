@@ -5,7 +5,6 @@
 #include "snake-map.h"
 #include "snake-tiles.h"
 
-#define NUM_SPRITES 13
 #define SPRITE_SIZE 8
 #define MAX_SNAKE_SIZE 10
 
@@ -13,6 +12,9 @@
 #define RIGHT_WALL_TILE 18
 #define TOP_WALL_TILE 5
 #define BOTTOM_WALL_TILE 17
+
+// Starting tile for numbers. Tile #3 = '0', Tile #4 = '1' and so on.
+#define NUMERICAL_OFFSET 3
 
 // Sprite ID for the snake components start at 0 (for the head) and increase
 // with each segment created until MAX_SNAKE_SIZE.
@@ -54,6 +56,37 @@ struct Snake snake = {0, 0, 1, LEFT};
 // Initial x,y coordinates will be set during init() and randomize every time
 // eaten.
 struct Fruit fruit = {0, 0};
+
+void drawScore() {
+  UINT8 sprite_id = 32;
+  UINT8 x = 19;
+  UINT8 n = score;
+  UINT8 digit, i;
+
+  // set score tiles to 0000.
+  for (i = 0; i < 4; i++) {
+    set_sprite_tile(sprite_id, NUMERICAL_OFFSET);
+    move_sprite(sprite_id, TILE_COORD(x), TILE_COORD(2));
+    x--;
+    sprite_id++;
+  }
+
+  // Move back to the start of the score.
+  sprite_id = 32;
+  x = 19;
+
+  // Override the tiles starting from the right, and moving to the left
+  // for the score, starting at the least significant bit.
+  while (n) {
+    digit = n % 10;
+    n /= 10;
+
+    set_sprite_tile(sprite_id, digit + NUMERICAL_OFFSET);
+    move_sprite(sprite_id, TILE_COORD(x), TILE_COORD(2));
+    x--;
+    sprite_id++;
+  }
+}
 
 UINT8 isGameOver() {
   UINT8 i;
@@ -137,8 +170,8 @@ void init() {
 
   SPRITES_8x8;
 
-  set_bkg_data(0, NUM_SPRITES, tiles);
-  set_sprite_data(0, NUM_SPRITES, tiles);
+  set_bkg_data(0, 0, tiles);
+  set_sprite_data(0, 0, tiles);
   set_bkg_tiles(0, 0, mapWidth, mapHeight, map);
 
   set_sprite_tile(FRUIT_SPRITE_ID, FRUIT_TILE);
@@ -154,6 +187,7 @@ void init() {
   snake.y = RANDOM_Y;
 
   drawSnake();
+  drawScore();
 
   SHOW_BKG;
   SHOW_SPRITES;
@@ -166,8 +200,8 @@ void main() {
   score = 1;
 
   init();
+  // Only start moving once a directional button has been pressed.
   waitpad(J_RIGHT | J_LEFT | J_UP | J_DOWN);
-
   while (1) {
     wait_vbl_done();
     frame++;
@@ -191,6 +225,7 @@ void main() {
       }
 
       moveFruit();
+      drawScore();
     }
 
     // Prevent moving in the opposite direction.
