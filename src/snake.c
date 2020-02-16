@@ -7,6 +7,7 @@
 
 #define SPRITE_SIZE 8
 #define MAX_SNAKE_SIZE 10
+#define MAX_LEVEL 10
 
 #define LEFT_WALL_TILE 3
 #define RIGHT_WALL_TILE 18
@@ -155,9 +156,27 @@ void growSnake() { set_sprite_tile(snake.size++, SNAKE_TILE); }
 
 void moveFruit() {
   // Generate a new x,y pair for the Fruit within the borders.
-  // TODO: make sure this doesn't spawn where a snake segment exists.
-  fruit.x = RANDOM_X;
-  fruit.y = RANDOM_Y;
+  UINT8 done = 0;
+  UINT8 i;
+  while (!done) {
+    fruit.x = RANDOM_X;
+    fruit.y = RANDOM_Y;
+    done = 1;
+    // If the new fruit position is where the snake head is...
+    if (snake.x == fruit.x && snake.y == fruit.y) {
+      done = 0;
+      break;
+    }
+    // ...or where one of the snake segments are, then regenerate the x,y pair
+    // and try again.
+    for (i = 0; i < snake.size - 1; i++) {
+      if (fruit.x == snake.segment[i].x && fruit.y == snake.segment[i].y) {
+        done = 0;
+        break;
+      }
+    }
+  }
+
   move_sprite(FRUIT_SPRITE_ID, TILE_COORD(fruit.x), TILE_COORD(fruit.y));
 }
 
@@ -197,7 +216,7 @@ void init() {
 void main() {
   frame = 0;
   level = 1;
-  score = 1;
+  score = 0;
 
   init();
   // Only start moving once a directional button has been pressed.
@@ -216,7 +235,7 @@ void main() {
       score++;
 
       // Every 10th score increase the level.
-      if (score % 10 == 0) {
+      if (score % 10 == 0 && level < MAX_LEVEL) {
         level++;
       }
 
