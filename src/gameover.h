@@ -1,11 +1,11 @@
 /*
 
- SNAKE-MAP.H
+ GAMEOVER.H
 
  Map Include File.
 
  Info:
-   Section       : 
+   Section       :
    Bank          : 0
    Map size      : 20 x 18
    Tile set      : tiles.gbr
@@ -18,10 +18,10 @@
 
 */
 
-#define mapWidth 20
-#define mapHeight 18
-#define mapBank 0
+#define gameoverWidth 20
+#define gameoverHeight 18
+#define gameoverBank 0
 
-extern unsigned char map[];
+extern unsigned char gameover[];
 
-/* End of SNAKE-MAP.H */
+/* End of GAMEOVER.H */
